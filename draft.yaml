@@ -1,0 +1,99 @@
+models:
+  Platform:
+    name: string:150
+    url: string:255 nullable
+    logo_path: string:255 nullable
+    timestamps: true
+    relationships:
+      hasMany: Application
+
+  Company:
+    name: string:150
+    industry: string:150 nullable
+    website: string:255 nullable
+    hr_email: string:150 nullable
+    phone: string:50 nullable
+    location: string:150 nullable
+    size: string:50 nullable
+    notes: longtext nullable
+    timestamps: true
+    relationships:
+      hasMany: Application, Contact
+
+  ApplicationStatus:
+    name: string:100
+    order_index: integer default:0
+    timestamps: true
+    relationships:
+      hasMany: Application, ApplicationStatusHistory
+
+  Application:
+    company_id: id foreign
+    platform_id: id foreign nullable
+    application_status_id: id foreign nullable
+
+    applied_at: date
+    position: string:150
+
+    job_description: longtext nullable
+    requirements: longtext nullable
+
+    work_location: string:150 nullable
+    schedule: string:150 nullable
+    salary_min: decimal:12,2 nullable
+    salary_max: decimal:12,2 nullable
+    salary_currency: string:10 default:COP
+
+    company_problem: longtext nullable
+    interview_tips: longtext nullable
+
+    email_sent: boolean default:false
+
+    cv_path: string:255
+    cover_letter_path: string:255 nullable
+
+    interest_level: integer default:3
+
+    follow_up_date: date nullable
+    response_date: date nullable
+
+    fit_score: integer nullable
+
+    is_remote: boolean default:false
+    timestamps: true
+
+    relationships:
+      belongsTo: Company, Platform, ApplicationStatus
+      hasMany: Interview, ApplicationStatusHistory
+
+  Interview:
+    application_id: id foreign
+    interview_date: datetime
+    interview_type: enum:Virtual,Presencial,Telefono,Tecnica,RRHH
+    interviewer_name: string:150 nullable
+    notes: longtext nullable
+    result: enum:Pendiente,Aprobada,Rechazada,Siguiente_ronda default:Pendiente
+    timestamps: true
+    relationships:
+      belongsTo: Application
+
+  Contact:
+    company_id: id foreign
+    name: string:150
+    email: string:150 nullable
+    phone: string:50 nullable
+    linkedin_url: string:255 nullable
+    position: string:150 nullable
+    notes: longtext nullable
+    timestamps: true
+    relationships:
+      belongsTo: Company
+
+  ApplicationStatusHistory:
+    application_id: id foreign
+    application_status_id: id foreign
+    changed_at: datetime
+    notes: longtext nullable
+    timestamps: true
+    relationships:
+      belongsTo: Application, ApplicationStatus
