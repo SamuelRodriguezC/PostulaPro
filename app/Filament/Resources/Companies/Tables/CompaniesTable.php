@@ -15,24 +15,33 @@ class CompaniesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 TextColumn::make('industry')
+                    ->label('Industria')
                     ->searchable(),
                 TextColumn::make('website')
+                    ->label('Sitio Web')
                     ->searchable(),
                 TextColumn::make('hr_email')
+                    ->label('Email RH')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->searchable(),
                 TextColumn::make('location')
+                    ->label('Ubicación')
                     ->searchable(),
                 TextColumn::make('size')
+                    ->label('Tamaño')
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
