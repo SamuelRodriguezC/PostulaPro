@@ -18,7 +18,7 @@ class PlatformResource extends Resource
 {
     protected static ?string $model = Platform::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedLink;
 
     protected static ?string $recordTitleAttribute = 'name';
 
