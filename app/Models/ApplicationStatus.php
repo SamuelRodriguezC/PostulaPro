@@ -41,4 +41,17 @@ class ApplicationStatus extends Model
     {
         return $this->hasMany(ApplicationStatusHistory::class);
     }
+
+    // Métodos 
+    public function color(): string
+    {
+        return match ($this->slug) {
+            'sent' => 'info',
+            'in_process' => 'warning',
+            'interview' => 'primary',
+            'offer' => 'success',
+            'rejected' => 'danger',
+            default => 'gray',
+        };
+    }
 }

@@ -15,14 +15,13 @@ class ApplicationsTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('company.name')
                     ->searchable(),
                 TextColumn::make('platform.name')
                     ->searchable(),
                 TextColumn::make('applicationStatus.name')
+                    ->badge()
+                    ->color(fn ($record) => $record->applicationStatus->color())
                     ->searchable(),
                 TextColumn::make('applied_at')
                     ->date()

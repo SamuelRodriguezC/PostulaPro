@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -19,12 +20,13 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Samueloo',
-            'email' => 'samuelo@gmal.com',
+            'email' => 'samuelo@gmail.com',
             'password' => bcrypt('sam1234'),
         ]);
 
         $this->call([
             PlatformSeeder::class,
+            ApplicationStatusSeeder::class,
         ]);
     }
 }

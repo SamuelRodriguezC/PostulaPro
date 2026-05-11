@@ -10,11 +10,11 @@ class ApplicationStatusSeeder extends Seeder
     public function run(): void
     {
         $statuses = [
-            ['name' => 'Enviada', 'order_index' => 1],
-            ['name' => 'En proceso', 'order_index' => 2],
-            ['name' => 'Entrevista', 'order_index' => 3],
-            ['name' => 'Oferta', 'order_index' => 4],
-            ['name' => 'Rechazada', 'order_index' => 5],
+            ['slug' => 'enviada', 'name' => 'Enviada', 'order_index' => 1],
+            ['slug' => 'in_process', 'name' => 'En proceso', 'order_index' => 2],
+            ['slug' => 'interview', 'name' => 'Entrevista', 'order_index' => 3],
+            ['slug' => 'offer', 'name' => 'Oferta', 'order_index' => 4],
+            ['slug' => 'rejected', 'name' => 'Rechazada', 'order_index' => 5],
         ];
 
         DB::table('application_statuses')->insert($statuses);
