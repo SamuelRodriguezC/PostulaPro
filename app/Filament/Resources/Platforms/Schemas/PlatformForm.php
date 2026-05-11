@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Platforms\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\FileUpload;
 
 class PlatformForm
 {
@@ -16,7 +17,8 @@ class PlatformForm
                 TextInput::make('url')
                     ->url()
                     ->default(null),
-                TextInput::make('logo_path')
+                FileUpload::make('logo_path')
+                    ->image()
                     ->default(null),
             ]);
     }
