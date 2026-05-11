@@ -10,7 +10,7 @@ class ApplicationStatusSeeder extends Seeder
     public function run(): void
     {
         $statuses = [
-            ['slug' => 'enviada', 'name' => 'Enviada', 'order_index' => 1],
+            ['slug' => 'sent', 'name' => 'Enviada', 'order_index' => 1],
             ['slug' => 'in_process', 'name' => 'En proceso', 'order_index' => 2],
             ['slug' => 'interview', 'name' => 'Entrevista', 'order_index' => 3],
             ['slug' => 'offer', 'name' => 'Oferta', 'order_index' => 4],
