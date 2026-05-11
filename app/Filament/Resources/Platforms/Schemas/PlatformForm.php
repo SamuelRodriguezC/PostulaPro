@@ -19,6 +19,7 @@ class PlatformForm
                     ->default(null),
                 FileUpload::make('logo_path')
                     ->image()
+                    ->directory('platform-logos')
                     ->default(null),
             ]);
     }
