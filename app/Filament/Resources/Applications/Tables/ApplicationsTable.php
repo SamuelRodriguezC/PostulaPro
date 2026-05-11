@@ -21,7 +21,8 @@ class ApplicationsTable
                     ->searchable(),
                 TextColumn::make('applicationStatus.name')
                     ->badge()
-                    ->color(fn ($record) => $record->applicationStatus->color())
+                    ->color(fn ($record) => $record->applicationStatus->enum()->getColor())
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('applied_at')
                     ->date()

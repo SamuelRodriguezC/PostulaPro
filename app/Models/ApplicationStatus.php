@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Enums\ApplicationStatusEnum;
 
 class ApplicationStatus extends Model
 {
@@ -43,15 +44,13 @@ class ApplicationStatus extends Model
     }
 
     // Métodos 
+   public function enum(): ApplicationStatusEnum
+    {
+        return ApplicationStatusEnum::from($this->slug);
+    }
+
     public function color(): string
     {
-        return match ($this->slug) {
-            'sent' => 'info',
-            'in_process' => 'warning',
-            'interview' => 'primary',
-            'offer' => 'success',
-            'rejected' => 'danger',
-            default => 'gray',
-        };
+        return $this->enum()->getColor();
     }
 }

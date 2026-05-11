@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Applications;
 
+use Illuminate\Database\Eloquent\Builder;
+use App\Enums\ApplicationStatusEnum;
 use App\Filament\Resources\Applications\Pages\CreateApplication;
 use App\Filament\Resources\Applications\Pages\EditApplication;
 use App\Filament\Resources\Applications\Pages\ListApplications;
@@ -29,6 +31,11 @@ class ApplicationResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return ApplicationForm::configure($schema);
+    }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with(['company', 'platform', 'applicationStatus']);
     }
 
     public static function table(Table $table): Table

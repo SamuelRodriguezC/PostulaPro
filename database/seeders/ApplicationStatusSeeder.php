@@ -3,20 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Enums\ApplicationStatusEnum;
+use App\Models\ApplicationStatus;
 
 class ApplicationStatusSeeder extends Seeder
 {
     public function run(): void
     {
-        $statuses = [
-            ['slug' => 'sent', 'name' => 'Enviada', 'order_index' => 1],
-            ['slug' => 'in_process', 'name' => 'En proceso', 'order_index' => 2],
-            ['slug' => 'interview', 'name' => 'Entrevista', 'order_index' => 3],
-            ['slug' => 'offer', 'name' => 'Oferta', 'order_index' => 4],
-            ['slug' => 'rejected', 'name' => 'Rechazada', 'order_index' => 5],
-        ];
-
-        DB::table('application_statuses')->insert($statuses);
+        foreach (ApplicationStatusEnum::cases() as $status) {
+            ApplicationStatus::updateOrCreate(
+                ['slug' => $status->value],
+                [
+                    'name' => $status->getLabel(),
+                    'order_index' => $status->getOrder(),
+                ]
+            );
+        }
     }
 }
