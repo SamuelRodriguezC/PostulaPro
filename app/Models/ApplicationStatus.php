@@ -38,10 +38,6 @@ class ApplicationStatus extends Model
         return $this->hasMany(Application::class);
     }
 
-    public function applicationStatusHistories(): HasMany
-    {
-        return $this->hasMany(ApplicationStatusHistory::class);
-    }
 
     // Métodos 
    public function enum(): ApplicationStatusEnum
@@ -52,5 +48,12 @@ class ApplicationStatus extends Model
     public function color(): string
     {
         return $this->enum()->getColor();
+    }
+
+    public static function getBySlug(string $slug): self
+    {
+        return static::query()
+            ->where('slug', $slug)
+            ->firstOrFail();
     }
 }

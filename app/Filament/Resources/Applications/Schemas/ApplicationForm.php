@@ -21,9 +21,6 @@ class ApplicationForm
                 Select::make('platform_id')
                     ->relationship('platform', 'name')
                     ->default(null),
-                Select::make('application_status_id')
-                    ->relationship('applicationStatus', 'name')
-                    ->default(null),
                 DatePicker::make('applied_at')
                     ->required(),
                 TextInput::make('position')
