@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
+
 
 class Application extends Model
 {
@@ -17,6 +19,7 @@ class Application extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'company_id',
         'platform_id',
         'application_status_id',
@@ -90,5 +93,15 @@ class Application extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+
+    // Métodos 
+    protected static function booted(): void
+    {
+        static::creating(function ($application) {
+            $application->user_id = Auth::id();
+        });
     }
 }

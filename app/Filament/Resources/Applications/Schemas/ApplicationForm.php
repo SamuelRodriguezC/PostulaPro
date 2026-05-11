@@ -15,9 +15,9 @@ class ApplicationForm
     {
         return $schema
             ->components([
-                TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                // TextInput::make('user_id')
+                //     ->required()
+                //     ->numeric(),
                 Select::make('company_id')
                     ->relationship('company', 'name')
                     ->required(),
