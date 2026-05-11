@@ -18,6 +18,10 @@ class ApplicationResource extends Resource
 {
     protected static ?string $model = Application::class;
 
+    protected static ?string $modelLabel = 'Aplicación';
+
+    protected static ?string $pluralModelLabel = 'Aplicaciones';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     protected static ?string $recordTitleAttribute = 'name';

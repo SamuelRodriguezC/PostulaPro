@@ -18,6 +18,10 @@ class CompanyResource extends Resource
 {
     protected static ?string $model = Company::class;
 
+    protected static ?string $modelLabel = 'Compañia';
+
+    protected static ?string $pluralModelLabel = 'Compañias';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice2;
 
     protected static ?string $recordTitleAttribute = 'name';
