@@ -7,6 +7,8 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\ImageColumn;
+
 
 class PlatformsTable
 {
@@ -15,16 +17,21 @@ class PlatformsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre Portal')
                     ->searchable(),
                 TextColumn::make('url')
                     ->searchable(),
-                TextColumn::make('logo_path')
-                    ->searchable(),
+                ImageColumn::make('logo_path')
+                    ->label('Logo')
+                    ->circular()
+                    ->size(50),
                 TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
