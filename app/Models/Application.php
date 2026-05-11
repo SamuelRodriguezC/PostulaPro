@@ -87,4 +87,8 @@ class Application extends Model
     {
         return $this->hasMany(ApplicationStatusHistory::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
