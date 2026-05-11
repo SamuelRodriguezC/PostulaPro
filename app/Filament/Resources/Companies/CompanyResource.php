@@ -18,7 +18,7 @@ class CompanyResource extends Resource
 {
     protected static ?string $model = Company::class;
 
-    protected static ?string $modelLabel = 'Compañia';
+    protected static ?string $modelLabel = 'Compañía';
 
     protected static ?string $pluralModelLabel = 'Compañias';
 

@@ -7,6 +7,10 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
+
 
 class CompaniesTable
 {
@@ -51,6 +55,11 @@ class CompaniesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                ViewAction::make()
+                    ->schema([
+                        TextEntry::make('name')
+                        // ...
+                    ])
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
