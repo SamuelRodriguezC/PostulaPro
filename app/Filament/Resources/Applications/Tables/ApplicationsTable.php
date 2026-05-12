@@ -56,6 +56,7 @@ class ApplicationsTable
                     ->boolean(),
                 TextColumn::make('interest_level')
                     ->label('Mi Interés')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('fit_score')
