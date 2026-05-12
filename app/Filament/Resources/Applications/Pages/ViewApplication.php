@@ -73,6 +73,8 @@ class ViewApplication extends ViewRecord
 
                 TextEntry::make('company.name')
                     ->label('Empresa'),
+                TextEntry::make('company.hr_email')
+                    ->label('Correo RH'),
 
                 TextEntry::make('platform.name')
                     ->label('Plataforma'),
