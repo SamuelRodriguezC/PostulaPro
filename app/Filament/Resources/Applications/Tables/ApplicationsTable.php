@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
 
 class ApplicationsTable
@@ -99,6 +100,8 @@ class ApplicationsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                ViewAction::make(),
+
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
