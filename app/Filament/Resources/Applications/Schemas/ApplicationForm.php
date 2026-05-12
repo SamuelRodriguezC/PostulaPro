@@ -12,9 +12,11 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Schema;
 use Filament\Support\RawJs;
+
 
 class ApplicationForm
 {
@@ -82,8 +84,10 @@ class ApplicationForm
                                     ->label('Descripción del cargo')
                                     ->columnSpanFull(),
 
-                                Textarea::make('requirements')
-                                    ->label('Requisitos (separados por comas)')
+                                TagsInput::make('requirements')
+                                    ->label('Requisitos del Cargo')
+                                    ->separator(',')
+                                    ->splitKeys([',', 'Enter', 'Tab'])
                                     ->columnSpanFull(),
 
                                 Grid::make(2)
