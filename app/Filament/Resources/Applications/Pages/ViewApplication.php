@@ -32,14 +32,16 @@ class ViewApplication extends ViewRecord
                 $this->generalSection()
                     ->columnSpan(8),
 
-                $this->salarySection()
-                    ->columnSpan(4),
+            Grid::make(1)
+                ->columnSpan(4)
+                ->extraAttributes(['class' => 'flex flex-col gap-6'])
+                ->schema([
+                    $this->salarySection()->grow(),
+                    $this->documentsSection()->grow(),
+                ]),
 
                 $this->trackingSection()
-                    ->columnSpan(9),
-
-                $this->documentsSection()
-                    ->columnSpan(3),
+                    ->columnSpan(12),
             ]),
         ]);
     }
@@ -58,6 +60,7 @@ class ViewApplication extends ViewRecord
                 TextEntry::make('company.name')
                     ->label('Empresa'),
 
+                
                 TextEntry::make('platform.name')
                     ->label('Plataforma'),
 
@@ -76,6 +79,11 @@ class ViewApplication extends ViewRecord
                 TextEntry::make('applied_at')
                     ->label('Fecha de Aplicación')
                     ->date('d M Y'),
+                
+                TextEntry::make('requirements')
+                    ->badge()
+                    ->color('info')
+                    ->separator(','),
             ]);
     }
 
@@ -153,10 +161,11 @@ class ViewApplication extends ViewRecord
                 TextEntry::make('cover_letter_path')
                     ->label('Carta de Presentación')
                     ->url(fn ($record) => $record->cover_letter_path)
+                    ->placeholder('No proporcionada')
                     ->openUrlInNewTab(),
 
-                TextEntry::make('notes')
-                    ->label('Notas')
+                TextEntry::make('interview_tips')
+                    ->label('Tips Entrevista')
                     ->columnSpanFull()
                     ->markdown(),
             ]);
