@@ -118,7 +118,6 @@ class ViewApplication extends ViewRecord
                     ->hiddenLabel()
                     ->columnSpanFull()
                     ->badge()
-                    ->color('success')
                     ->separator(',')
                     ->prose(),
             ]);
@@ -128,12 +127,16 @@ class ViewApplication extends ViewRecord
     {
         return Section::make('Tips de Entrevista')
             ->icon('heroicon-o-light-bulb')
-            ->columns(1)
+            ->columns(2)
             ->schema([
                 TextEntry::make('interview_tips')
                     ->hiddenLabel()
-                    ->columnSpanFull()
+                    ->columnSpan(1)
                     ->prose(),
+                TextEntry::make('company_problem')
+                    ->label('Problema de la Empresa')
+                    ->columnSpan(1)
+                    ->color('danger'),
             ]);
     }
 
@@ -206,14 +209,12 @@ class ViewApplication extends ViewRecord
             ->schema([
                 TextEntry::make('cv_path')
                     ->label('CV')
-                    ->url(fn ($record) => $record->cv_path)
-                    ->openUrlInNewTab(),
+                    ->formatStateUsing(fn ($state) => basename($state)),
 
                 TextEntry::make('cover_letter_path')
                     ->label('Carta de Presentación')
-                    ->url(fn ($record) => $record->cover_letter_path)
                     ->placeholder('No proporcionada')
-                    ->openUrlInNewTab(),
+                    ->formatStateUsing(fn ($state) => basename($state)),
             ]);
     }
 }
