@@ -12,7 +12,6 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Support\Enums\TextSize;
 
-
 class ViewApplication extends ViewRecord
 {
     protected static string $resource = ApplicationResource::class;
@@ -29,22 +28,37 @@ class ViewApplication extends ViewRecord
         return $schema->schema([
             Grid::make(12)->columnSpanFull()->schema([
 
-                $this->generalSection()
-                    ->columnSpan(8),
 
-            Grid::make(1)
-                ->columnSpan(4)
-                ->extraAttributes(['class' => 'flex flex-col gap-6'])
-                ->schema([
-                    $this->salarySection()->grow(),
-                    $this->documentsSection()->grow(),
+                Grid::make(12)->columnSpanFull()->schema([
+
+                    $this->generalSection()
+                        ->columnSpan(8),
+
+                    Grid::make(1)
+                        ->columnSpan(4)
+                        ->extraAttributes(['class' => 'flex flex-col gap-6'])
+                        ->schema([
+                            $this->salarySection()->grow(),
+                            $this->documentsSection()->grow(),
+                        ]),
                 ]),
+
+
+                $this->jobDescriptionSection()
+                 ->columnSpan(6),
+
+                $this->requirementsSection()
+                    ->columnSpan(6),
+
+                $this->interviewTipsSection()
+                    ->columnSpan(12),
 
                 $this->trackingSection()
                     ->columnSpan(12),
             ]),
         ]);
     }
+
 
     protected function generalSection(): Section
     {
@@ -60,7 +74,6 @@ class ViewApplication extends ViewRecord
                 TextEntry::make('company.name')
                     ->label('Empresa'),
 
-                
                 TextEntry::make('platform.name')
                     ->label('Plataforma'),
 
@@ -70,20 +83,57 @@ class ViewApplication extends ViewRecord
                     ->color(fn ($record) => $record->applicationStatus?->enum()?->getColor()),
 
                 TextEntry::make('work_location')
-                    ->label('Ubicación'),
+                    ->label('Lugar de Trabajo'),
 
-                IconEntry::make('is_remote')
-                    ->label('Remoto')
+                IconEntry::make('email_sent')
+                    ->label('Email Enviado')
                     ->boolean(),
 
                 TextEntry::make('applied_at')
                     ->label('Fecha de Aplicación')
-                    ->date('d M Y'),
-                
+                    ->date(),
+            ]);
+    }
+
+    protected function jobDescriptionSection(): Section
+    {
+        return Section::make('Descripción del Cargo')
+            ->icon('heroicon-o-document-text')
+            ->columns(1)
+            ->schema([
+                TextEntry::make('job_description')
+                    ->hiddenLabel()
+                    ->columnSpanFull()
+                    ->prose(),
+            ]);
+    }
+
+    protected function requirementsSection(): Section
+    {
+        return Section::make('Requisitos')
+            ->icon('heroicon-o-check-circle')
+            ->columns(1)
+            ->schema([
                 TextEntry::make('requirements')
+                    ->hiddenLabel()
+                    ->columnSpanFull()
                     ->badge()
-                    ->color('info')
-                    ->separator(','),
+                    ->color('success')
+                    ->separator(',')
+                    ->prose(),
+            ]);
+    }
+
+    protected function interviewTipsSection(): Section
+    {
+        return Section::make('Tips de Entrevista')
+            ->icon('heroicon-o-light-bulb')
+            ->columns(1)
+            ->schema([
+                TextEntry::make('interview_tips')
+                    ->hiddenLabel()
+                    ->columnSpanFull()
+                    ->prose(),
             ]);
     }
 
@@ -115,9 +165,10 @@ class ViewApplication extends ViewRecord
             ->icon('heroicon-o-chart-bar')
             ->columns(3)
             ->schema([
-                IconEntry::make('email_sent')
-                    ->label('Email Enviado')
+                IconEntry::make('is_remote')
+                    ->label('Remoto')
                     ->boolean(),
+
 
                 TextEntry::make('interest_level')
                     ->label('Nivel de Interés')
@@ -149,8 +200,8 @@ class ViewApplication extends ViewRecord
 
     protected function documentsSection(): Section
     {
-        return Section::make('Documentación y Notas')
-            ->icon('heroicon-o-document-text')
+        return Section::make('Documentación')
+            ->icon('heroicon-o-paper-clip')
             ->columns(2)
             ->schema([
                 TextEntry::make('cv_path')
@@ -163,11 +214,6 @@ class ViewApplication extends ViewRecord
                     ->url(fn ($record) => $record->cover_letter_path)
                     ->placeholder('No proporcionada')
                     ->openUrlInNewTab(),
-
-                TextEntry::make('interview_tips')
-                    ->label('Tips Entrevista')
-                    ->columnSpanFull()
-                    ->markdown(),
             ]);
     }
 }

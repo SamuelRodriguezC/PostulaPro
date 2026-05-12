@@ -83,7 +83,7 @@ class ApplicationForm
                                     ->columnSpanFull(),
 
                                 Textarea::make('requirements')
-                                    ->label('Requisitos')
+                                    ->label('Requisitos (separados por comas)')
                                     ->columnSpanFull(),
 
                                 Grid::make(2)
