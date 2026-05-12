@@ -114,11 +114,13 @@ class ApplicationForm
                                             ->schema([
                                                 TextInput::make('salary_min')
                                                     ->label('Salario mínimo')
-                                                    ->numeric(),
+                                                    ->numeric()
+                                                    ->step(100000),
 
                                                 TextInput::make('salary_max')
                                                     ->label('Salario máximo')
-                                                    ->numeric(),
+                                                    ->numeric()
+                                                    ->step(100000),
 
                                                 TextInput::make('salary_currency')
                                                     ->label('Moneda')

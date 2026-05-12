@@ -10,6 +10,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Support\Enums\TextSize;
+
 
 class ViewApplication extends ViewRecord
 {
@@ -25,10 +27,20 @@ class ViewApplication extends ViewRecord
     public function infolist(Schema $schema): Schema
     {
         return $schema->schema([
-            $this->generalSection(),
-            $this->salarySection(),
-            $this->trackingSection(),
-            $this->documentsSection(),
+            Grid::make(12)->columnSpanFull()->schema([
+
+                $this->generalSection()
+                    ->columnSpan(8),
+
+                $this->salarySection()
+                    ->columnSpan(4),
+
+                $this->trackingSection()
+                    ->columnSpan(9),
+
+                $this->documentsSection()
+                    ->columnSpan(3),
+            ]),
         ]);
     }
 
@@ -36,35 +48,34 @@ class ViewApplication extends ViewRecord
     {
         return Section::make('Información Principal')
             ->icon('heroicon-o-briefcase')
+            ->columns(2)
             ->schema([
-                Grid::make(2)->schema([
+                TextEntry::make('position')
+                    ->label('Cargo')
+                    ->weight('bold')
+                    ->size(TextSize::Large),
 
-                    TextEntry::make('position')
-                        ->label('Cargo')
-                        ->weight('bold'),
+                TextEntry::make('company.name')
+                    ->label('Empresa'),
 
-                    TextEntry::make('company.name')
-                        ->label('Empresa'),
+                TextEntry::make('platform.name')
+                    ->label('Plataforma'),
 
-                    TextEntry::make('platform.name')
-                        ->label('Plataforma'),
+                TextEntry::make('applicationStatus.name')
+                    ->label('Estado')
+                    ->badge()
+                    ->color(fn ($record) => $record->applicationStatus?->enum()?->getColor()),
 
-                    TextEntry::make('applicationStatus.name')
-                        ->label('Estado')
-                        ->badge()
-                        ->color(fn ($record) => $record->applicationStatus->enum()->getColor()),
+                TextEntry::make('work_location')
+                    ->label('Ubicación'),
 
-                    TextEntry::make('work_location')
-                        ->label('Ubicación'),
+                IconEntry::make('is_remote')
+                    ->label('Remoto')
+                    ->boolean(),
 
-                    IconEntry::make('is_remote')
-                        ->label('Remoto')
-                        ->boolean(),
-                    
-                    TextEntry::make('applied_at')
-                        ->label('Fecha de Aplicación')
-                        ->date('d M Y'),
-                ]),
+                TextEntry::make('applied_at')
+                    ->label('Fecha de Aplicación')
+                    ->date('d M Y'),
             ]);
     }
 
@@ -72,21 +83,21 @@ class ViewApplication extends ViewRecord
     {
         return Section::make('Condiciones Económicas')
             ->icon('heroicon-o-currency-dollar')
+            ->columns(2)
             ->schema([
-                Grid::make(2)->schema([
+                TextEntry::make('salary_min')
+                    ->label('Salario Mínimo')
+                    ->size(TextSize::Large)
+                    ->money('COP', decimalPlaces: 0),
 
-                    TextEntry::make('salary_min')
-                        ->label('Salario Mínimo')
-                        ->money(fn ($record) => $record->salary_currency ?? 'COP'),
+                TextEntry::make('salary_max')
+                    ->label('Salario Máximo')
+                    ->size(TextSize::Large)
+                    ->money('COP', decimalPlaces: 0),
 
-                    TextEntry::make('salary_max')
-                        ->label('Salario Máximo')
-                        ->money(fn ($record) => $record->salary_currency ?? 'COP'),
-
-                    TextEntry::make('schedule')
-                        ->label('Horario'),
-
-                ]),
+                TextEntry::make('schedule')
+                    ->label('Horario')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -94,39 +105,37 @@ class ViewApplication extends ViewRecord
     {
         return Section::make('Seguimiento')
             ->icon('heroicon-o-chart-bar')
+            ->columns(3)
             ->schema([
-                Grid::make(3)->schema([
+                IconEntry::make('email_sent')
+                    ->label('Email Enviado')
+                    ->boolean(),
 
-                    IconEntry::make('email_sent')
-                        ->label('Email Enviado')
-                        ->boolean(),
+                TextEntry::make('interest_level')
+                    ->label('Nivel de Interés')
+                    ->badge()
+                    ->color(fn ($state) => match (true) {
+                        $state >= 8 => 'success',
+                        $state >= 5 => 'warning',
+                        default => 'gray',
+                    }),
 
-                    TextEntry::make('interest_level')
-                        ->label('Nivel de Interés')
-                        ->badge()
-                        ->color(fn ($state) => match (true) {
-                            $state >= 8 => 'success',
-                            $state >= 5 => 'warning',
-                            default => 'gray',
-                        }),
+                TextEntry::make('fit_score')
+                    ->label('Puntuación')
+                    ->badge()
+                    ->color(fn ($state) => match (true) {
+                        $state >= 80 => 'success',
+                        $state >= 60 => 'warning',
+                        default => 'danger',
+                    }),
 
-                    TextEntry::make('fit_score')
-                        ->label('Puntuación')
-                        ->badge()
-                        ->color(fn ($state) => match (true) {
-                            $state >= 80 => 'success',
-                            $state >= 60 => 'warning',
-                            default => 'danger',
-                        }),
+                TextEntry::make('response_date')
+                    ->label('Fecha de Respuesta')
+                    ->date(),
 
-                    TextEntry::make('response_date')
-                        ->label('Fecha de Respuesta')
-                        ->date(),
-
-                    TextEntry::make('follow_up_date')
-                        ->label('Fecha de Seguimiento')
-                        ->date(),
-                ]),
+                TextEntry::make('follow_up_date')
+                    ->label('Fecha de Seguimiento')
+                    ->date(),
             ]);
     }
 
@@ -134,19 +143,17 @@ class ViewApplication extends ViewRecord
     {
         return Section::make('Documentación y Notas')
             ->icon('heroicon-o-document-text')
+            ->columns(2)
             ->schema([
-                Grid::make(2)->schema([
+                TextEntry::make('cv_path')
+                    ->label('CV')
+                    ->url(fn ($record) => $record->cv_path)
+                    ->openUrlInNewTab(),
 
-                    TextEntry::make('cv_path')
-                        ->label('CV')
-                        ->url(fn ($record) => $record->cv_path)
-                        ->openUrlInNewTab(),
-
-                    TextEntry::make('cover_letter_path')
-                        ->label('Carta de Presentación')
-                        ->url(fn ($record) => $record->cover_letter_path)
-                        ->openUrlInNewTab(),
-                ]),
+                TextEntry::make('cover_letter_path')
+                    ->label('Carta de Presentación')
+                    ->url(fn ($record) => $record->cover_letter_path)
+                    ->openUrlInNewTab(),
 
                 TextEntry::make('notes')
                     ->label('Notas')

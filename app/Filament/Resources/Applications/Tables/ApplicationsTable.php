@@ -36,10 +36,12 @@ class ApplicationsTable
                     ->label('Cargo')
                     ->searchable(),
                 TextColumn::make('work_location')
-                    ->label('Ubicación')
+                    ->label('Lugar Trabajo')
+                    ->limit(25)
                     ->searchable(),
                 TextColumn::make('schedule')
                     ->label('Horario')
+                    ->limit(25)
                     ->searchable(),
                 TextColumn::make('salary_min')
                     ->label('Salario Mínimo')
