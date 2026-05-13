@@ -198,6 +198,7 @@ class ApplicationForm
                                     ->schema([
                                         FileUpload::make('cv_path')
                                             ->label('Ruta del CV')
+                                            ->required()
                                             ->preserveFilenames()
                                             ->openable()
                                             ->acceptedFileTypes(['application/pdf'])
